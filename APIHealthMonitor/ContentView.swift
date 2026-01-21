@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
 	
+	@State private var isLoading: Bool = false
 	@State private var apiURL: String = ""
-	@State private var statusMsg: String = "Enter an API endpoint and tap Check"
+	@State private var statusMsg: String = ""
 	
     var body: some View {
 		VStack(spacing: 16) {
@@ -24,9 +25,19 @@ struct ContentView: View {
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled(true)
 #endif
-			Button("Check Health") {
-				checkHealth()
-			}.buttonStyle(.borderedProminent)
+			
+			Button {
+				Task {
+					await checkHealth()
+				}
+			} label: {
+				if isLoading {
+					ProgressView()
+				} else {
+					Text("Check Health")
+				}
+			}
+			.buttonStyle(.borderedProminent)
 			Text(statusMsg).foregroundColor(.gray)
 			Spacer()
         }
@@ -34,12 +45,31 @@ struct ContentView: View {
     }
 	
     // MARK: - Actions
-    private func checkHealth() {
-        if apiURL.isEmpty {
-            statusMsg = "❌ Please enter a valid URL"
-        } else {
-            statusMsg = "✅ URL looks good (networking coming next)"
-        }
+    private func checkHealth() async {
+		guard let url = URL(string: apiURL) else {
+			statusMsg = "❌ Please enter a valid URL"
+			return
+		}
+        
+		isLoading = true
+		statusMsg = "Checking..."
+		
+		let startTime = Date()
+		do {
+			let (_, response) = try await URLSession.shared.data(from: url)
+			let duration = Date().timeIntervalSince(startTime)
+			if let httpResponse = response as? HTTPURLResponse {
+				statusMsg = """
+					Status: \(httpResponse.statusCode)
+					Response time: \(Int(duration)) ms
+					"""
+			} else {
+				statusMsg = "❌ Failed to get a valid HTTP response"
+			}
+		} catch {
+			statusMsg = "❌ Request failed \(error.localizedDescription)"
+		}
+		isLoading = false
     }
 }
 
