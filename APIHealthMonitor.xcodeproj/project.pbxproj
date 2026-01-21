@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		917EB4CF2F207454006F7011 /* APIHealthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 917EB4CE2F207450006F7011 /* APIHealthService.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		917EB4B22F2009F7006F7011 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		917EB4A42F2009F6006F7011 /* APIHealthMonitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = APIHealthMonitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		917EB4B12F2009F7006F7011 /* APIHealthMonitorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APIHealthMonitorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		917EB4BB2F2009F7006F7011 /* APIHealthMonitorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APIHealthMonitorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		917EB4CE2F207450006F7011 /* APIHealthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHealthService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		917EB49B2F2009F6006F7011 = {
 			isa = PBXGroup;
 			children = (
+				917EB4CE2F207450006F7011 /* APIHealthService.swift */,
 				917EB4A62F2009F6006F7011 /* APIHealthMonitor */,
 				917EB4B42F2009F7006F7011 /* APIHealthMonitorTests */,
 				917EB4BE2F2009F7006F7011 /* APIHealthMonitorUITests */,
@@ -236,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				917EB4CF2F207454006F7011 /* APIHealthService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

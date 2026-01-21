@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
 	
+	private let healthService: APIHealthChecking = APIHealthService()
 	@State private var isLoading: Bool = false
 	@State private var apiURL: String = ""
 	@State private var statusMsg: String = ""
@@ -56,16 +57,12 @@ struct ContentView: View {
 		
 		let startTime = Date()
 		do {
-			let (_, response) = try await URLSession.shared.data(from: url)
-			let duration = Date().timeIntervalSince(startTime)
-			if let httpResponse = response as? HTTPURLResponse {
-				statusMsg = """
-					Status: \(httpResponse.statusCode)
-					Response time: \(Int(duration)) ms
+			let result = try await healthService.check(url: url)
+			
+			statusMsg = """
+					Status: \(result.statusCode)
+					Response time: \(result.responseTimeMs) ms
 					"""
-			} else {
-				statusMsg = "❌ Failed to get a valid HTTP response"
-			}
 		} catch {
 			statusMsg = "❌ Request failed \(error.localizedDescription)"
 		}
